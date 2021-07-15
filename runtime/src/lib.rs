@@ -267,7 +267,10 @@ impl pallet_sudo::Config for Runtime {
 	type Call = Call;
 }
 
-impl pallet_kitties::Config for Runtime {}
+impl pallet_kitties::Config for Runtime {
+    type KittyRandomness = RandomnessCollectiveFlip;
+	type Balance = Balance;
+}
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
@@ -285,7 +288,7 @@ construct_runtime!(
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		// Include the custom logic from the pallet-template in the runtime.
-		SubstrateKitties: pallet_kitties::{Pallet, Call, Storage},
+		SubstrateKitties: pallet_kitties::{Pallet, Call, Config<T>, Storage},
 	}
 );
 
